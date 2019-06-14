@@ -39,6 +39,7 @@ module.exports = buildSchema(`
       }
 
       type RootQuery {
+         users:[User!]
          events: [Event!]!
          bookings:[Booking!]
       }
