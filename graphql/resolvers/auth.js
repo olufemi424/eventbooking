@@ -2,6 +2,7 @@
 const User = require("../../models/user");
 const bcrypt = require("bcryptjs");
 const { events } = require("./mergeData");
+const jwt = require("jsonwebtoken");
 
 module.exports = {
   users: async () => {
@@ -23,7 +24,7 @@ module.exports = {
     try {
       const user = await User.findOne({ email: args.userInput.email });
       if (user) {
-        throw new Error("User exists alreadt");
+        throw new Error("User exists already");
       }
       const hashedPassword = await bcrypt.hash(args.userInput.password, 12);
 
@@ -40,5 +41,29 @@ module.exports = {
     } catch (err) {
       throw err;
     }
+  },
+
+  login: async ({ email, password }) => {
+    const user = await User.findOne({ email: email });
+    if (!user) {
+      throw new Error("User does not exist");
+    }
+    const isEqual = await bcrypt.compare(password, user.password);
+
+    if (!isEqual) {
+      throw new Error("Password is incorrect");
+    }
+
+    const token = jwt.sign(
+      { userId: user.id, email: user.email },
+      "somesupersecretkey",
+      { expiresIn: "1hr" }
+    );
+
+    return {
+      userId: user.id,
+      token: token,
+      tokenExpiration: 1
+    };
   }
 };

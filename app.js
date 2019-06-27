@@ -6,11 +6,16 @@ const mongoose = require("mongoose");
 const grapghqlSchema = require("./graphql/schema/index");
 const grapghqlResolvers = require("./graphql/resolvers/index");
 
+//middleware
+const isAuth = require("./middleware/is-auth");
+
 //set up express
 const app = express();
 
 //body parser
 app.use(bodyParser.json());
+
+app.use(isAuth);
 
 //handling query being sent using the grapghql pkg
 app.use(
