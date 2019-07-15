@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import AuthContext from "../context/auth-context";
 
 export class Auth extends Component {
   state = {
@@ -6,6 +7,7 @@ export class Auth extends Component {
     password: "",
     isLogin: true
   };
+  static contextType = AuthContext;
 
   swithModeHandle = () => {
     this.setState(prevState => {
@@ -45,7 +47,6 @@ export class Auth extends Component {
         `
       };
     }
-    console.log(requestBody);
 
     fetch("http://localhost:8000/graphql", {
       method: "POST",
@@ -60,8 +61,14 @@ export class Auth extends Component {
         }
         return res.json();
       })
-      .then(resBody => {
-        console.log(resBody);
+      .then(resData => {
+        if (resData.data.login.token) {
+          this.context.login(
+            resData.data.login.token,
+            resData.data.login.userId,
+            resData.data.login.userTokenExpiration
+          );
+        }
       })
       .catch(err => {
         console.log(err);
@@ -73,6 +80,7 @@ export class Auth extends Component {
   };
 
   render() {
+    console.log(this.context);
     return (
       <form className="auth-form" onSubmit={this.submitHandler}>
         <div className="form-control">
