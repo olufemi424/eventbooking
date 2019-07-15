@@ -12,6 +12,17 @@ const isAuth = require("./middleware/is-auth");
 //set up express
 const app = express();
 
+//CORS ERROR HANDLING
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authoriztion");
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(200);
+  }
+  next();
+});
+
 //body parser
 app.use(bodyParser.json());
 
@@ -28,7 +39,7 @@ app.use(
 );
 
 //set up server and db
-const PORT = 3000;
+const PORT = 8000;
 mongoose
   .connect(
     `mongodb+srv://${process.env.MONGO_USER}:${
