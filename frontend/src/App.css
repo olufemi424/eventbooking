@@ -28,7 +28,8 @@
   margin-bottom: 1.5rem;
 }
 
-.form-actions button {
+.form-actions button,
+.btn {
   background: #01d1d1;
   font: inherit;
   border: 1px solid #039a9a;
@@ -41,7 +42,58 @@
 }
 
 .form-actions button:hover,
-.form-actions button:active {
+.form-actions button:active,
+.btn:hover,
+.btn:active {
   background: #039a9a;
   border: 1px solid #01d1d1;
+}
+
+/* //event page */
+
+.events-control {
+  text-align: center;
+  border: 1px solid #039a9a;
+  max-width: 80%;
+  margin: 2rem auto;
+  padding: 1rem;
+  width: 30rem;
+  left: 5%;
+}
+
+/* //modal css */
+.modal {
+  width: 90%;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  position: fixed;
+  top: 20vh;
+  left: 5%;
+}
+
+.modal__header {
+  padding: 1rem;
+  background: #039a9a;
+  color: #fff;
+}
+
+.modal__header h1 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.modal__content {
+  padding: 1rem;
+}
+
+.modal__actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem;
+}
+@media (min-width: 768) {
+  .modal {
+    width: 30rem;
+    left: calc((100% -30rem) / 2);
+  }
 }

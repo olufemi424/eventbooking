@@ -1,8 +1,19 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
+import Modal from "../components/modal/Modal";
 
 export class Events extends Component {
   render() {
-    return <div>This is Event</div>;
+    return (
+      <Fragment>
+        <div className="events-control">
+          <p>Share your own events</p>
+          <button className="btn">Create Event</button>
+        </div>
+        <Modal title={"Add Event"} canCancel canConfirm>
+          Modal Content
+        </Modal>
+      </Fragment>
+    );
   }
 }
 
