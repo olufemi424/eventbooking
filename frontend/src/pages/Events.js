@@ -133,12 +133,14 @@ export class Events extends Component {
     });
     return (
       <Fragment>
-        <div className="events-control">
-          <p>Share your own events</p>
-          <button className="btn" onClick={this.startCreatingEventHandler}>
-            Create Event
-          </button>
-        </div>
+        {this.context.token && (
+          <div className="events-control">
+            <p>Share your own events</p>
+            <button className="btn" onClick={this.startCreatingEventHandler}>
+              Create Event
+            </button>
+          </div>
+        )}
         {this.state.creating && <Backdrop />}
         {this.state.creating && (
           <Modal
