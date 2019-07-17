@@ -80,7 +80,6 @@ export class Auth extends Component {
   };
 
   render() {
-    console.log(this.context);
     return (
       <form className="auth-form" onSubmit={this.submitHandler}>
         <div className="form-control">

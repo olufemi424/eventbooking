@@ -10,7 +10,8 @@
 }
 
 .form-control label,
-.form-control input {
+.form-control input,
+.form-control textarea {
   width: 100%;
   display: block;
 }
@@ -63,12 +64,12 @@
 
 /* //modal css */
 .modal {
-  width: 90%;
+  width: 60%;
   background: #fff;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   position: fixed;
   top: 20vh;
-  left: 5%;
+  left: 20%;
 }
 
 .modal__header {
@@ -83,7 +84,7 @@
 }
 
 .modal__content {
-  padding: 1rem;
+  padding: 2rem;
 }
 
 .modal__actions {
@@ -105,4 +106,20 @@
     width: 30rem;
     left: calc((100% - 30rem) / 2);
   }
+}
+
+/* events list */
+
+.events__list {
+  width: 40rem;
+  max-width: 90%;
+  margin: 2rem auto;
+  list-style: none;
+  padding: 0;
+}
+
+.events__list-item {
+  margin: 1rem 0;
+  padding: 1rem;
+  border: 1px solid #039a9a;
 }
