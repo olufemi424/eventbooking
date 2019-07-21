@@ -15,7 +15,7 @@ export default function Modal(props) {
         )}
         {props.canConfirm && (
           <button className="btn" onClick={props.onConfirm}>
-            Confirm
+            {props.buttonText}
           </button>
         )}
       </section>

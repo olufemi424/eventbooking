@@ -70,6 +70,7 @@
   position: fixed;
   top: 20vh;
   left: 20%;
+  z-index: 100;
 }
 
 .modal__header {

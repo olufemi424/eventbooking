@@ -1,9 +1,9 @@
 import React from "react";
-import "./loading.css";
+import "./spinner.css";
 
-const Loading = () => {
+const Spinner = () => {
   return (
-    <div class="lds-default">
+    <div className="lds-default">
       <div />
       <div />
       <div />
@@ -20,4 +20,4 @@ const Loading = () => {
   );
 };
 
-export default Loading;
+export default Spinner;
