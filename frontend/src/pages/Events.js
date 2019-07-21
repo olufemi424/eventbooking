@@ -2,6 +2,7 @@ import React, { Component, Fragment } from "react";
 import Modal from "../components/modal/Modal";
 import Backdrop from "../components/backdrop/Backdrop";
 import AuthContext from "../context/auth-context";
+import EventList from "../components/Events/EventsList";
 
 export class Events extends Component {
   state = {
@@ -97,6 +98,9 @@ export class Events extends Component {
               title
               description
               price
+              creator{
+                _id
+              }
             }
           }
         `
@@ -120,17 +124,11 @@ export class Events extends Component {
         this.setState({ events });
       })
       .catch(err => {
-        console.log(err);
+        console.error(`Error Fetching Event: ${err.message}`);
       });
   };
+
   render() {
-    const eventList = this.state.events.map(event => {
-      return (
-        <li className="events__list-item" key={event._id}>
-          {event.title}
-        </li>
-      );
-    });
     return (
       <Fragment>
         {this.context.token && (
@@ -174,8 +172,10 @@ export class Events extends Component {
             </form>
           </Modal>
         )}
-
-        <ul className="events__list">{eventList}</ul>
+        <EventList
+          events={this.state.events}
+          authUserId={this.context.userId}
+        />
       </Fragment>
     );
   }
