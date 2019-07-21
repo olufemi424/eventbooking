@@ -3,11 +3,13 @@ import Modal from "../components/modal/Modal";
 import Backdrop from "../components/backdrop/Backdrop";
 import AuthContext from "../context/auth-context";
 import EventList from "../components/Events/EventsList";
+import Loading from "../components/commons/Loading";
 
 export class Events extends Component {
   state = {
     creating: false,
-    events: []
+    events: [],
+    loading: false
   };
 
   constructor(props) {
@@ -58,10 +60,6 @@ export class Events extends Component {
               title
               description
               price
-              creator {
-                _id
-                email
-              }
             }
           }
         `
@@ -82,7 +80,19 @@ export class Events extends Component {
         return res.json();
       })
       .then(resData => {
-        console.log(resData);
+        this.setState(prevState => {
+          const updatedEvent = [...prevState.events];
+          updatedEvent.push({
+            _id: resData.data.createEvent._id,
+            title: resData.data.createEvent.title,
+            description: resData.data.createEvent.description,
+            price: resData.data.createEvent.price,
+            creator: {
+              _id: this.context.userId
+            }
+          });
+          return { events: updatedEvent };
+        });
       })
       .catch(err => {
         console.log(err);
@@ -90,6 +100,7 @@ export class Events extends Component {
   };
 
   fetchEvents = () => {
+    this.setState({ loading: true });
     const requestBody = {
       query: `
           query{
@@ -100,6 +111,7 @@ export class Events extends Component {
               price
               creator{
                 _id
+                email
               }
             }
           }
@@ -122,9 +134,11 @@ export class Events extends Component {
       .then(resData => {
         const { events } = resData.data;
         this.setState({ events });
+        this.setState({ loading: false });
       })
       .catch(err => {
         console.error(`Error Fetching Event: ${err.message}`);
+        this.setState({ loading: false });
       });
   };
 
@@ -172,10 +186,14 @@ export class Events extends Component {
             </form>
           </Modal>
         )}
-        <EventList
-          events={this.state.events}
-          authUserId={this.context.userId}
-        />
+        {this.state.loading ? (
+          <Loading />
+        ) : (
+          <EventList
+            events={this.state.events}
+            authUserId={this.context.userId}
+          />
+        )}
       </Fragment>
     );
   }
