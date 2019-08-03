@@ -62,6 +62,7 @@ export class Auth extends Component {
         return res.json();
       })
       .then(resData => {
+        // to do seperate login and register
         if (resData.data.login.token) {
           this.context.login(
             resData.data.login.token,
