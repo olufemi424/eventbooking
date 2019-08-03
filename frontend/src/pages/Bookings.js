@@ -2,11 +2,13 @@ import React, { Component } from "react";
 import AuthContext from "../context/auth-context";
 import Spinner from "../components/commons/Spinner";
 import BookingList from "../components/Bookings/BookingList";
+import BookingsChart from "../components/Bookings/BookingsChart";
 
 export class Bookings extends Component {
   state = {
     isLoading: false,
-    bookings: []
+    bookings: [],
+    outputType: "list"
   };
 
   static contextType = AuthContext;
@@ -26,6 +28,7 @@ export class Bookings extends Component {
               event{
                 _id
                 title
+                price
               }
             }
           }
@@ -104,19 +107,47 @@ export class Bookings extends Component {
       });
   };
 
+  changeOutputTypeHandler = outputType => {
+    if (outputType === "list") {
+      this.setState({ outputType: "list" });
+    } else {
+      this.setState({ outputType: "chart" });
+    }
+  };
   render() {
-    return (
-      <div>
-        {this.state.isLoading ? (
-          <Spinner> </Spinner>
-        ) : (
-          <BookingList
-            bookings={this.state.bookings}
-            onDelete={this.deleteBookingHandler}
-          />
-        )}
-      </div>
-    );
+    let content = <Spinner />;
+    if (!this.state.isLoading) {
+      content = (
+        <>
+          <div className="bookings__control">
+            <button
+              className={this.state.outputType === "list" ? "active" : ""}
+              onClick={() => this.changeOutputTypeHandler("list")}
+            >
+              List
+            </button>
+            <button
+              className={this.state.outputType === "chart" ? "active" : ""}
+              onClick={() => this.changeOutputTypeHandler("chart")}
+            >
+              Chart
+            </button>
+          </div>
+          <div>
+            {this.state.outputType === "list" ? (
+              <BookingList
+                bookings={this.state.bookings}
+                onDelete={this.deleteBookingHandler}
+              />
+            ) : (
+              <BookingsChart bookings={this.state.bookings} />
+            )}
+          </div>
+        </>
+      );
+    }
+
+    return <div>{content}</div>;
   }
 }
 

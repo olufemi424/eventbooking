@@ -160,7 +160,12 @@ export class Events extends Component {
   showDetailHandler = eventId => {
     this.setState(prevState => {
       const selectedEvent = prevState.events.find(e => e._id === eventId);
-      return { selectedEvent: selectedEvent };
+      const selectedEventNew = {
+        ...selectedEvent,
+        date: new Date(selectedEvent.date).toLocaleString()
+      };
+
+      return { selectedEvent: selectedEventNew };
     });
   };
 
@@ -259,7 +264,7 @@ export class Events extends Component {
         )}
         {this.state.selectedEvent && (
           <Modal
-            title={"Add Event"}
+            title={this.state.selectedEvent.title}
             canCancel
             canConfirm
             onConfirm={this.bookEventHandler}
@@ -271,6 +276,7 @@ export class Events extends Component {
               $ {this.state.selectedEvent.price} -{" "}
               {this.state.selectedEvent.date}{" "}
             </h2>
+            <p>{this.state.selectedEvent.description}</p>
           </Modal>
         )}
         {this.state.loading ? (

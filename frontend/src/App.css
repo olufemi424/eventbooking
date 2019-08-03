@@ -160,3 +160,26 @@
   justify-content: space-between;
   align-items: center;
 }
+
+.bookings__control {
+  text-align: center;
+  padding: 0.5rem;
+}
+
+.bookings__control button,
+.bookings__control button:focus {
+  font: inherit;
+  border: none;
+  background: transparent;
+  color: black;
+  padding: 0.25rem 1rem;
+  outline: none;
+  border-bottom: 2px solid rgb(218, 218, 218);
+  transition: all ease 400ms;
+  cursor: pointer;
+}
+
+.bookings__control button.active {
+  color: #039a9a;
+  border-bottom-color: #039a9a;
+}
