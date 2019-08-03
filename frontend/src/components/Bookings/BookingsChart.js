@@ -8,7 +8,21 @@ const BOOKINGS_BUCKETS = {
 };
 
 const BookingsChart = props => {
-  const outputData = { label: [], datasets: [] };
+  const output = {};
+  const outputData = {
+    labels: [],
+    datasets: [
+      {
+        label: "Bookings Chart",
+        backgroundColor: "rgba(255,99,132,0.2)",
+        borderColor: "rgba(255,99,132,1)",
+        borderWidth: 1,
+        hoverBackgroundColor: "rgba(255,99,132,0.4)",
+        hoverBorderColor: "rgba(255,99,132,1)",
+        data: []
+      }
+    ]
+  };
 
   for (let bucket in BOOKINGS_BUCKETS) {
     const filteredBookingsCount = props.bookings.reduce((prev, curr) => {
@@ -20,16 +34,12 @@ const BookingsChart = props => {
       }
       return prev;
     }, 0);
-    // outputData[bucket] = filteredBookingsCount;
-    outputData.label.push(bucket);
-    outputData.datasets.push({
-      backgroundColor: "rgba(255,99,132,0.2)",
-      borderColor: "rgba(255,99,132,1)",
-      borderWidth: 1,
-      hoverBackgroundColor: "rgba(255,99,132,0.4)",
-      hoverBorderColor: "rgba(255,99,132,1)",
-      data: [filteredBookingsCount]
-    });
+    output[bucket] = filteredBookingsCount;
+    outputData.labels.push(bucket);
+  }
+
+  for (let dataset in output) {
+    outputData.datasets[0].data.push(output[dataset]);
   }
 
   console.log(outputData);
@@ -38,8 +48,8 @@ const BookingsChart = props => {
       <div>Bookings Chart</div>
       <Bar
         data={outputData}
-        width={100}
-        height={50}
+        width={50}
+        height={400}
         options={{ maintainAspectRatio: false }}
       />
     </>
