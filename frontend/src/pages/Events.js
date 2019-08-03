@@ -59,16 +59,24 @@ export class Events extends Component {
 
     const requestBody = {
       query: `
-          mutation{
-            createEvent(eventInput: {title: "${title}", price:${price}, date:"${date}" description:"${description}"}){
+          mutation CreateEvent( $title:String!, $price:Float!, $date: String!, $description: String!){
+            createEvent(eventInput: {title: $title, price:$price, date:$date description:$description}){
               _id
               title
               description
               price
             }
           }
-        `
+        `,
+      variables: {
+        title: title,
+        price: price,
+        date: date,
+        description: description
+      }
     };
+
+    // console.log(requestBody);
 
     fetch("http://localhost:8000/graphql", {
       method: "POST",
@@ -163,14 +171,17 @@ export class Events extends Component {
     }
     const requestBody = {
       query: `
-          mutation{
-            bookEvent(eventId: "${this.state.selectedEvent._id}"){
+          mutation BookEvent($id:ID!){
+            bookEvent(eventId: $id){
               _id
               createdAt
               updatedAt
             }
           }
-        `
+        `,
+      variables: {
+        id: this.state.selectedEvent._id
+      }
     };
     const token = this.context.token;
     fetch("http://localhost:8000/graphql", {
